@@ -11,11 +11,7 @@ on:
 
 jobs:
   build:
-<<<<<<< HEAD
     name: Request Netlify Webhook
-=======
-    name: Request Netlify Build
->>>>>>> a6ee36f34ca773c27c7c2e77135e90a5b7d262c8
     runs-on: ubuntu-latest
     steps:
       - name: Ping
