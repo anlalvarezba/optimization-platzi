@@ -1,0 +1,34 @@
+#Flujo automatizado para auditar cada Pull Request con Lighthouse
+name: Performance Audit
+
+# Control: Ejecute la accion para cada Pull Request
+# Y cada Push a nuestro branch de produccion
+on: 
+  pull_request:
+  push:
+    branches:
+      - analvarezba-optimization-ssg
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Install and build
+        run:
+          npm install
+          npm run build
+
+      - name: Audit with Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          # Configuracion para auditar sobre un sitio estatico
+          runs: 5
+          uploadArtifacts: true # que el producto de esta accion lo suba a github y posteriormente se puede descargar
+          configPath: './setup/lighthouse-audit.json'
